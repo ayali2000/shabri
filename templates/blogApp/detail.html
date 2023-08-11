@@ -1,0 +1,221 @@
+{% extends 'partial/base.html' %}
+{% block content %}
+{% include "partial/nav.html" %}
+<div class="d-block d-lg-none d-md-none d-sm-none"> 
+    <div class = 'afnav px-4'>
+        <header>
+            <h1>{{detail_post.title}}</h1>
+        </header>
+    </div>
+    <div class='card'>
+        <div class='card-body'>
+        <p id='blogp'>{{ detail_post.intro}}</p>
+        </div>
+        {% if detail_post.is_Video %}
+        <div class=''>
+            <video class='w-100' autoplay="autoplay" controls="controls" height='300px' preload="preload">
+                <source src="{{ detail_post.file.url }}" type="video/mp4" ></source>
+            </video><br>
+        </div>
+        {% else %}
+        <div class='card-body'>
+            <img class='w-100' src="{{ detail_post.file.url }}" alt='' height='300px' style="object-fit:cover;">
+        </div>
+        {% endif %}
+        <div class='card-body'>
+            {% for i in detail_more_post %}
+            <p id='blogp'>{{ i.body}}</p>
+            {% if i.file%}
+                <img class='w-100' src="{{ i.file.url }}" alt='' height='300px'>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class='container-fluid mx-0'>
+<div class='d-none d-lg-block d-md-block d-sm-block' id="">
+    <div class="row">
+        <div class="col col-lg-8 mx-0 px-0">
+            <article class='card px-2 offset-lg-2'>
+                <header><br>
+                    <h3 id='title'>{{detail_post.title}}</h3><hr>
+                </header>
+                <section>
+                    <p id='blogp'>
+                        {{ detail_post.intro}}
+                    </p><br>
+                    {% if detail_post.is_Video %}
+                    <div class=''>
+                        <video class='w-100' autoplay="autoplay" controls="controls" height='300px' preload="preload">
+                            <source src="{{ detail_post.file.url }}" type="video/mp4" ></source>
+                        </video><br>
+                    </div>
+                    {% else %}
+                    <div class='card-body'>
+                        <img class='w-100' src="{{ detail_post.file.url }}" alt='' height='300px' >
+                    </div><br>
+                    {% endif %}
+                    <div class='card-body'>
+                        {% for i in detail_more_post %}
+                        <p id='blogp'>{{ i.body}}</p>
+                        {% if i.file %}
+                        <img class='w-100' src="{{ i.file.url }}" alt='' height='300px'>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <br><br>
+                    <div class="d-block d-lg-none">
+                        <div class="w-100">
+                            {% if messages%}
+                            {% for m in messages %}
+                            <div class='alert alert-success mt-4'>
+                            {{m}}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            <h5>comment</h5>
+                            <form method = 'POST'>
+                                {% csrf_token %}
+                                <div class="for-control car mt-2">
+                                    {% if request.user.is_anonymous %}
+                                    <div class="mb-2">
+                                        <input type='email'  name='email' placeholder='enter email'>
+                                    </div>
+                                    {% endif %}
+                                    <div class='mb-2'>
+                                        <input class='col-md-7' id='comtext' type='textarea' name='comment_text' placeholder='leave comment html'>
+                                    </div>
+                                    <div class=''>
+                                        <input class='btn btn-primary' type='submit' value='send' action='.' style='background-color:orange;'>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-md-7 accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <p class="accordion-button collapsed px-0 py-1 mx-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        read comments: {{ count_comment }}
+                                    </p>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            <div class='card-body bg-light mb-5'>
+                                                {% for i in comment_post %}
+                                                <div class=''>
+                                                <p class='w-100'><small>{{i.comment_text}}</small></p>
+                                                </div>
+                                                <hr>
+                                                {% endfor %}
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </div>
+        <div class="col col-lg-3 d-lg-block d-md-none d-sm-none offset-lg-8" id="rside">
+            <div class="w-100"><br>
+                {% if messages%}
+                {% for m in messages %}
+                <div class='alert alert-success mt-4'>
+                {{m}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <h5>Write a comment</h5>
+                <form method = 'POST'>
+                    {% csrf_token %}
+                    <div class="for-control car mt-2">
+                        {% if request.user.is_anonymous %}
+                        <div class="mb-2">
+                            <input class='form-control w-100' type='email' name='email' placeholder='enter email'>
+                        </div>
+                        {% endif %}
+                        <div class='mb-2'>
+                            <input class='form-control w-100' id='comtext' type='textarea' name='comment_text' placeholder='leave comment html'>
+                        </div>
+                        <input class = "btn btn-primary" style='background-color:orange;' type = 'submit'>
+                        <div class=''>
+                            <div class="accordion accordion-flush mt-2" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <p class="accordion-button collapsed px-0 py-1" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        read comments: {{ count_comment }}
+                                    </p>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            <div class='card-body bg-light mb-5'>
+                                                {% for i in comment_post %}
+                                                <div class='mb-2'>
+                                                <p><small>{{i.comment_text}}</small></p>
+                                                </div>
+                                                <hr>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-block d-lg-none d-md-none d-sm-none mx-4"><br>
+    <h5>comment</h5>
+    <form method = 'POST'>
+        {% csrf_token %}
+        <div class="for-control car mt-2">
+            {% if request.user.is_anonymous %}
+            <div class="mb-2">
+                <input class='form-control px-2 w-100' type='email' name='email' placeholder='enter email'>
+            </div>
+            {% endif %}
+            <div class='mb-2'>
+                <input class='form-control px-2 w-100' id='comtext' type='textarea' name='comment_text' placeholder='write something here'>
+            </div>
+            <input class = " btn btn-primary" style='background-color:orange;' type = 'submit'>
+        </div>
+    </form>
+    <div class='card-body mb-4'>
+        <div class="w-100 accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <p class="accordion-button collapsed px-0 py-1 mx-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    read comments: {{ count_comment }}
+                </p>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <div class='card-body bg-light mb-5'>
+                            {% for i in comment_post %}
+                            <div class=''>
+                            <p class='w-100'><small>{{i.comment_text}}</small></p>
+                            </div>
+                            <hr>
+                            {% endfor %}
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <center>
+            <h3>Recent posts</h3>
+        </center>
+        <div class='row row-cols-2'>
+            {% for i in ten_post%}
+            <div class='col px-0 my-0'>
+                <div class='card-body py-0 px-1'>
+                    <a href="{% url 'detail' i.pk %}" style='text-decoration:none; color:black'><img class='w-100 phone10img' src="{{ i.file.url }}" alt='' height='80px'>
+                    <p id='phone10'>{{i.title}}</a></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+{% include "partial/footer.html" %}
+{% endblock  %}

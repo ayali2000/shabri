@@ -1,0 +1,145 @@
+{% extends 'partial/base.html' %}
+{% load static %}
+{% block title %}blog{% endblock %}
+{% block content %}
+{% include "partial/nav.html" %}
+<div class="d-block d-lg-none"> 
+    <div class = 'afnav'>
+    <div class='d-block d-lg-none d-md-none'>
+        <img class='rotate linear infinite' src="{% static 'media/pro.png' %}" alt=''>
+    </div>   
+    </div>
+    <div class='car'>
+        <div class='row row-cols-sm-2 row-cols-md-3'>
+        {% if not query%}
+        {% for i in all_posts %}
+        <div class='col card-body shadow py-1 mb-2'>
+            {% if i.is_Video %}
+            <div class=''>
+                <video class='w-100' autoplay="autoplay" controls="controls" height='250px' preload="preload">
+                    <source src="{{ i.file.url }}" type="video/mp4" ></source>
+                </video><br>
+            </div>
+            {% else %}
+            <div class='card-body'>
+                <img class='w-100' src="{{i.file.url}}" alt='' height='250px' style='object-fit:cover;'>
+            </div><br>
+            {% endif %}
+            <br>
+            <p id='desc'>{{i.title}}</h1></p>
+            <div class='d-flex w-100 px-2' style='justify-content: space-between;'>
+            <button class='btn btn-primary' style='background-color:orange;'><a href="{% url 'detail' i.pk %}" style='text-decoration:none;'> read more</a>
+            </button>
+            <span class='d-flex' style='align-self: center;' >
+                <small><small>{{i.date_added}}</small></small>
+            </span>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            {% if query %}
+                {% if result%}
+                    {% for r in result %}
+                    <div class='card-body shadow'>
+                        <div id='listdate'>{{r.date_added}}
+                        </div>
+                        <img class='w-100' src="{{r.file.url}}" alt='' height='250px'>
+                        <br>
+                        <p id='blogp'>{{r.title}}</p>
+                        <button class='btn btn-primary' style='background-color:orange;'><a href="{% url 'detail' r.pk %}" style='text-decoration:none;'> read more</a>
+                        </button>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class=''> No results found 
+                </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+        </div>
+    </div><br>
+    {% include 'partial/footer.html' %}
+</div>
+<div class='container mx-1 px-1 d-none d-lg-block'>
+    <div class='row '>
+        <div class='col-3 py-5' id='listleft'>
+        <div>
+            <div class='col-lg-6 d-none d-lg-block d-md-block'>
+                <form class="d-flex" id="search" method="GETS" action="{% url 'blog' %}">
+                    <input class="form-control mx-1" id="search" name="q" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit" id='bbt'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+            <div class=''><br><br><br>
+                <center>
+                <img class='rotateblog linear infinite' src="{% static 'media/pro.png' %}" alt=''>
+                </center>
+            </div>
+        </div>
+        </div>
+        <div class='col-9 offset-lg-3 py-5'>
+            <div class='car'>
+                <div class='row row-cols-lg-5'>
+                {% if not query%}
+                {% for i in all_posts %}
+                <div class='card col card-body shadow py-1 px-0 mb-1 mx-1'>
+                    {% if i.is_Video %}
+                    <div class=''>
+                        <video class='w-100' autoplay="autoplay" controls="controls" height='100px' preload="preload">
+                            <source src="{{ i.file.url }}" type="video/mp4" ></source>
+                        </video><br>
+                    </div>
+                    {% else %}
+                        <img class='w-100' src="{{i.file.url}}" alt='' height='100px' style='object-fit:cover;'>
+                    {% endif %}
+                    <p class='my-0 mx-1' id='desc'>{{i.intro}}</p>
+                    <div class='d-flex w-100' style='justify-content: space-between;'>
+                    <button class='btn btn-primary px-0 py-1' style='background-color:orange;'><a href="{% url 'detail' i.pk %}" style='text-decoration:none;'> read more</a>
+                    </button>
+                    <span class='d-flex' style='align-self: center;' >
+                        <small><small><small><small>{{i.date_added}}</small></small></small></small>
+                    </span>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                    {% if query %}
+                    {% if result %}
+                        {% for i in result %}
+                        <div class='col-lg-4 shadow py-1 px-0 mb-1 mx-1'>
+                            {% if i.is_Video %}
+                            <div class=''>
+                                <video class='w-100' autoplay="autoplay" controls="controls" height='150px' preload="preload">
+                                    <source src="{{ i.file.url }}" type="video/mp4" ></source>
+                                </video><br>
+                            </div>
+                            {% else %}
+                                <img class='w-150' src="{{i.file.url}}" alt='' height='100px' style='object-fit:cover;'>
+                            {% endif %}
+                            <br>
+                            <p class='my-0 mx-1' id='desc'>{{i.intro}}</p>
+                            <div class='d-flex w-100' style='justify-content: space-between;'>
+                            <button class='btn btn-primary px-0 py-1' style='background-color:orange;'><a href="{% url 'detail' i.pk %}" style='text-decoration:none;'> read more</a>
+                            </button>
+                            <span class='d-flex' style='align-self: center;' >
+                                <small><small><small><small>{{i.date_added}}</small></small></small></small>
+                            </span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else%}
+                    <div class=''> No results found 
+                    </div>
+                    {% endif %}
+                {% endif %}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock  %}

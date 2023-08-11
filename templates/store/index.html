@@ -1,0 +1,192 @@
+{% extends 'partial/base.html' %}
+{% block title %}
+Shabri store
+{% endblock %}
+{% load static %}
+{% block content %}
+{% include 'partial/nav.html' %}
+<div class='container-fluid offset-lg-0 mb-5'>
+    <div class='row row-cols-1 row-cols-lg-2'>
+        <div class='col col-lg-10'>
+        <div class="row px-0"> 
+            <div class = 'afnav'>
+                <div class='col col-lg-6 d-none d-lg-block d-md-block'>
+                    <form class="d-flex" id="search" method="GETS" action="{% url 'store' %}">
+                        <input class="form-control me-2" id="search" name="q" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit" id='bbt'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+                <div class='d-block d-lg-none d-md-none'>
+                    <img class='rotate linear infinite' src="{% static 'media/pro.png' %}" alt=''>
+                </div>
+                <div class='col col-lg-6 d-none d-lg-block d-md-block'>
+                    <h1 class="text-white" id="shab">ShaBri Online Store<h1>
+                </div>
+            </div>
+        </div>
+        {% if not query %}
+        <div class="container-fluid">
+            <div class="car mt-3">
+                <div class="card-header mb-2" id="disp">
+                    <div class='row'>
+                        <div class='col'>
+                        <h3>Phones</h3>
+                        </div>
+                        <div class='col align-items-center'>
+                            <center>
+                            <a href="{% url 'cat' %}" class="text-white" style="text-decoration:none;">see all</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-lg-5 row-cols-md-3 row-cols-2">
+                    {% for i in all_phones %}
+                        <div class='col mb-4 px-1' >
+                            <div class='card' id='hove'>
+                                <center>
+                                <p class='mb-0'><mute>{{i.Name}}</mute></p>
+                                </center>
+                                <a  style="text-decoration:none;" href="{% url 'phone_detail' i.pk %}"><img class='w-100'src="{{ i.image.url }}" alt="" id="primg">
+                                <div class='px-2'>
+                                    <p id='desc'>{{i.Description}}</p>
+                                    <p id='loc'><strong>Ghs</strong> {{i.Price}}</p>
+                                    <p id='loc'><strong>Loc:</strong> {{i.Location}}</p>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="car mt-3">
+                <div class="card-header mb-2" id="disp">
+                    <div class='row'>
+                        <div class='col'>
+                        <h3>Fitness</h3>
+                        </div>
+                        <div class='col align-items-center'>
+                            <center>
+                            <a href="{% url 'access'%}" class="text-white" style="text-decoration:none;">see all</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-lg-5 row-cols-md-3 row-cols-2">
+                    {% for i in all_health %}
+                        <div class='col mb-4 px-1' >
+                            <div class='card' id='hove'>
+                                <center>
+                                <p class='mb-0'><mute>{{i.Name}}</mute></p>
+                                </center>
+                                <a style="text-decoration:none;" href="{{i.Location}}"><img class='w-100'src="{{ i.image.url }}" alt="" id="primg">
+                                <div class=' px-2'>
+                                    <p id='desc'>{{i.Description}}</p>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="car mt-3">
+                <div class="card-header mb-2" id="disp">
+                    <div class='row'>
+                        <div class='col'>
+                        <h3>Wears</h3>
+                        </div>
+                        <div class='col pr-0'>
+                            <center>
+                            <a href="{% url 'sneaker' %}" class="text-white" style="text-decoration:none;">see all</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-lg-5 row-cols-md-3 row-cols-2">
+                    {% for i in all_wears %}
+                        <div class='col mb-4 px-1' >
+                            <div class='card' id='hove'>
+                                <center>
+                                <p class='mb-0'><mute>{{i.Name}}</mute></p>
+                                </center>
+                                <a style="text-decoration:none;" href="{% url 'phone_detail' i.pk %}"><img class='w-100'src="{{ i.image.url }}" alt="" id="primg">
+                                <div class='px-1'>
+                                    <p id='desc'>{{i.Description}}</p>
+                                    <p id='loc'><strong>Ghs</strong> {{i.Price}}</p>
+                                    <p id='loc'><strong>Loc:</strong> {{i.Location}}</p>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="car mt-3">
+                <div class="card-header mb-2" id="disp">
+                    <div class='row'>
+                        <div class='col-8'>
+                        <h3>General store</h3>
+                        </div>
+                        <div class='col align-items-center'>
+                            <center>
+                            <a href="{% url 'others' %}" class="text-white" style="text-decoration:none;">see all</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-lg-5 row-cols-md-3 row-cols-2">
+                    {% for i in others %}
+                        <div class='col mb-4 px-1' >
+                            <div class='card' id='hove'>
+                                <center>
+                                <p class='mb-0'><mute>{{i.Name}}</mute></p>
+                                </center>
+                                <a style="text-decoration:none;" href="{% url 'phone_detail' i.pk %}"><img class='w-100'src="{{ i.image.url }}" alt="" id="primg"></a>
+                                <div class='px-2'>
+                                    <p id='desc'>{{i.Description}}</p>
+                                    <p id='loc'><strong>Ghs</strong> {{i.Price}}</p>
+                                    <p id='loc'><strong>Loc:</strong> {{i.Location}}
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        {% if query %}
+            {% if result %}
+            <div class='row row-cols-1 row-cols-lg-5'>
+            {% for i in result %}
+                <div class='col mb-3 px-0'>
+                    <div class='card-body bg-light'>
+                        <p><center><h2>{{i.Name}}</h2></center></p>
+                        <a style="text-decoration:none;" href="{% url 'phone_detail' i.pk %}"><img class='w-100' src="{{ i.image.url }}" alt="" id="primg">
+                        <div class=''>
+                            <p id='desc'>{{i.Description}}</p>
+                            <p id='loc'><strong>Ghs</strong> {{i.Price}}</p>
+                            <p id='loc'><strong>Loc:</strong> {{i.Location}}</p>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            {% else %}  
+            No results  
+            {% endif %}
+        {% endif %}
+        {% endif %}<br><br>
+        </div>
+        <div class='col col-lg-2'>
+            ads to show here
+        </div>
+    {% include 'partial/footer.html' %} 
+    {% include "partial/phonenav.html" %} 
+    </div>
+</div>
+{% endblock%}

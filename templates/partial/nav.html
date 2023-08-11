@@ -1,0 +1,111 @@
+<nav
+  class="navbar navbar-expand-lg navbar-light sticky-top shadow"
+  id="phonenavbar"
+>
+  <div class="container-fluid">
+    <div class="d-none d-lg-block">
+      <a class="navbar-brand" href="#" id="shab">ShaBri</a>
+    </div>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="d-block d-lg-none">
+      <center>
+        <a class="navbar-brand" href="#" id="shab">ShaBri</a>
+      </center>
+    </div>
+    <div class="d-block d-lg-none">
+      <div id="myOverlay" class="overlay">
+        <span class="closebtn" onclick="closeSearch()" title="Close Overlay"
+          >×</span
+        >
+        <div class="overlay-content">
+          <form method="GET" action="">
+            <input type="text" placeholder="Search.." name="q" />
+            <button type="submit">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-search"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <button
+      class="openBtn d-block d-lg-none px-0 py-0"
+      onclick="openSearch()"
+      style="background-color: transparent"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="25"
+        fill="currentColor"
+        class="bi bi-search"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+        />
+      </svg>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'genindex' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'store' %}">Store</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'blog' %}">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'sell' %}">sell</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-white"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Accounts
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if request.user.is_authenticated %}
+            <li>
+              <a class="dropdown-item" href="{% url 'logout' %}">logout</a>
+            </li>
+            {% else %}
+            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="{% url 'signup' %}">Sign up</a>
+            </li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

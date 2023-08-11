@@ -1,0 +1,1 @@
+web: gunicorn shabrisite.wsgi --log-file -

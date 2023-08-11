@@ -1,0 +1,76 @@
+{% extends 'partial/base.html' %}
+{% block title %}
+Shabri store
+{% endblock %}
+{% block content %} 
+{% include 'partial/nav.html' %}
+<div class='container mx-lg-5 offset-lg-1'>
+    <div class ='row row-cols-lg-2'>
+        <div class='col col-lg-6'>
+            <div class='car mt-4'>
+                <div class='bg-dark py-1'>
+                    <center>
+                    <h2 style='color:orange;'>{{item.Name}}</h2>
+                    </center>
+                </div><br>
+                <div class=''>
+                    <center>
+                       <img class=' d-none d-lg-block d-md-block' src="{{item.image.url}}" alt='...' height='350px' id='det'>
+                    </center>
+                <img class='w-100 d-block d-lg-none d-md-none' src="{{item.image.url}}" alt='...' height='400px' id='det'>
+                </div>
+            </div>
+            <div class='card-body row mt-4'>
+                <div class='col d-flex'  style = 'background:orange; color:white;'>
+                    <p><strong>Ghs</strong> {{item.Price}}</p>
+                </div>
+                <div class='col' style = 'background:lightgreen; color:white;'>
+                    <center>
+                    Contact: {{item.number}}
+                    </center>
+                </div>
+            </div>
+            <div class='mt-2' style = 'color:orange;' >
+                <center>
+                    Location: {{item.Location}}
+                </center>
+            </div>
+            <p class='mt-2'>{{item.Description}}</p>
+            <div class='alert alert-warning'>
+            <strong> NOTE:</strong> I'm not responsible for any scams. Make sure you get your desired product before any payment
+            </div><br><br>
+        </div>
+        <div class='col col-lg-4 mt-4 d-none d-lg-block d-md-block offset-lg-1'>
+            <div>
+                {% if messages%}
+                {% for m in messages %}
+                <div class='alert alert-success mt-5'>
+                {{m}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <div class='bg-dark py-1 orderform px-4'>
+                    <center>
+                        <h2 style='color:orange;'> make an order here</h2>
+                    </center>
+                </div><br><br><br>
+                <div class='orderform'>
+                    <form method = 'POST'>
+                        {% csrf_token %}
+                        <div>
+                        {{Ord_Form.Name}}<br>
+                        {{Ord_Form.Quantity}}<br>
+                        {{Ord_Form.Phone_num}}<br>
+                        {{Ord_Form.Address}}<br>
+                        <div class='d-flex justify-content-center'>
+                        <input class = "btn btn-primary d-flex" type = 'submit' style='background-color:orange;'></input>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "partial/phonenav.html" %}
+{% endblock %}
